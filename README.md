@@ -42,4 +42,5 @@ python manage.py runserver
 
 # Зависимости
 Django==5.2.1
+
 requests
