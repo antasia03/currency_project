@@ -13,24 +13,23 @@
 ## Установка
 
 1. Клонировать репозиторий:
+`git clone https://github.com/antasia03/currency_project`
 
-'git clone https://github.com/antasia03/currency_project'
-
-'cd currency_rates'
+`cd currency_rates`
 
 2. Создать и активировать виртуальное окружение (пример для Windows):
 
-'python -m venv venv'
+`python -m venv venv`
 
-'venv\Scripts\activate'
+`venv\Scripts\activate`
 
 3. Установить зависимости:
 
-'pip install -r requirements.txt'
+`pip install -r requirements.txt`
 
 4. Запустить сервер:
 
-'python manage.py runserver'
+`python manage.py runserver`
 
 Открыть в браузере: http://127.0.0.1:8000/
 
