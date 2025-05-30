@@ -15,7 +15,7 @@
 1. Клонировать репозиторий:
 
 git clone https://github.com/antasia03/currency_project
-cd currency_rates_nb_rb
+cd currency_rates
 
 2. Создать и активировать виртуальное окружение (пример для Windows):
 
