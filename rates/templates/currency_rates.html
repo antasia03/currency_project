@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Курсы валют</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <h1 class="mb-4 text-center">Курсы валют НБ РБ</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Валюта</th>
+                    <th>Курс</th>
+                    <th>Множитель (Scale)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rate in rates %}
+                <tr>
+                    <td>{{ rate.Cur_Abbreviation }} ({{ rate.Cur_Name }})</td>
+                    <td>{{ rate.Cur_OfficialRate }}</td>
+                    <td>{{ rate.Cur_Scale }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">Данные не доступны</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <form method="get" action="">
+    <button type="submit" class="btn btn-primary mb-3">Обновить данные</button>
+    </form>
+    <hr class="my-5">
+
+    <div class="card shadow-sm mt-4">
+        <div class="card-body">
+            <h2 class="card-title mb-3">Конвертер валют</h2>
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <input type="number" name="amount" step="0.01" min="0" class="form-control" placeholder="Сумма" required>
+                </div>
+                <div class="col-md-3">
+                    <select name="from_currency" class="form-select" required>
+                        <option value="" disabled selected>Из валюты</option>
+                        {% for rate in all_rates %}
+                        <option value="{{ rate.Cur_Abbreviation }}">{{ rate.Cur_Abbreviation }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="to_currency" class="form-select" required>
+                        <option value="" disabled selected>В валюту</option>
+                        {% for rate in all_rates %}
+                        <option value="{{ rate.Cur_Abbreviation }}">{{ rate.Cur_Abbreviation }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-success w-100">Конвертировать</button>
+                </div>
+            </form>
+
+            {% if conversion_result %}
+            <div class="alert alert-info mt-4" role="alert">
+                {{ conversion_result }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <hr class="my-5">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title mb-3">Поиск валюты по коду</h2>
+            <form method="get" class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <input type="text" name="code" id="code" class="form-control" placeholder="например, PLN" value="{{ request.GET.code }}">
+                </div>
+                 <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Поиск</button>
+                </div>
+            </form>
+
+            {% if search_result %}
+                <div class="alert alert-success mt-4" role="alert">
+                    <strong>{{ search_result.Cur_Scale }} {{ search_result.Cur_Name }} ({{ search_result.Cur_Abbreviation }})</strong> =
+                    {{ search_result.Cur_OfficialRate }} BYN
+                </div>
+            {% elif request.GET.code %}
+                <div class="alert alert-danger mt-4" role="alert">
+                    Валюта с кодом "{{ request.GET.code }}" не найдена.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
