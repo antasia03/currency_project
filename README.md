@@ -13,6 +13,7 @@
 ## Установка
 
 1. Клонировать репозиторий:
+   
 `git clone https://github.com/antasia03/currency_project`
 
 `cd currency_rates`
